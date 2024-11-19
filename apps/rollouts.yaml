@@ -19,7 +19,7 @@ spec:
     spec:
       destination:
         namespace: 'argo-rollouts'
-        name: '{{.name}}'
+        name: mac2
       project: kargo-b-demo
       source:
         repoURL: 'https://github.com/emilyxinyi/kargo-b.git'
