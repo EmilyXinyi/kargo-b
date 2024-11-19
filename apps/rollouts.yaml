@@ -22,7 +22,7 @@ spec:
         name: '{{.name}}'
       project: kargo-b-demo
       source:
-        repoURL: 'https://github.com/dhpup/kargo-b.git'
+        repoURL: 'https://github.com/emilyxinyi/kargo-b.git'
         path: 'config/rollouts'
         targetRevision: 'main'
       syncPolicy:

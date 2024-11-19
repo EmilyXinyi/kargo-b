@@ -18,7 +18,7 @@ spec:
       steps:
       - uses: git-clone
         config:
-          repoURL: https://github.com/dhpup/kargo-b.git
+          repoURL: https://github.com/emilyxinyi/kargo-b.git
           checkout:
           - branch: main
             path: ./src
@@ -53,7 +53,7 @@ spec:
           apps:
           - name: app-a-non-prod-dev
             sources:
-            - repoURL: https://github.com/dhpup/kargo-b.git
+            - repoURL: https://github.com/emilyxinyi/kargo-b.git
               desiredCommitFromStep: commit
 ---
 apiVersion: kargo.akuity.io/v1alpha1
@@ -77,7 +77,7 @@ spec:
       steps:
       - uses: git-clone
         config:
-          repoURL: https://github.com/dhpup/kargo-b.git
+          repoURL: https://github.com/emilyxinyi/kargo-b.git
           checkout:
           - branch: main
             path: ./src
@@ -112,7 +112,7 @@ spec:
           apps:
           - name: app-a-non-prod-uat
             sources:
-            - repoURL: https://github.com/dhpup/kargo-b.git
+            - repoURL: https://github.com/emilyxinyi/kargo-b.git
               desiredCommitFromStep: commit
 ---
 apiVersion: kargo.akuity.io/v1alpha1
@@ -136,7 +136,7 @@ spec:
       steps:
       - uses: git-clone
         config:
-          repoURL: https://github.com/dhpup/kargo-b.git
+          repoURL: https://github.com/emilyxinyi/kargo-b.git
           checkout:
           - branch: main
             path: ./src
@@ -171,7 +171,7 @@ spec:
           apps:
           - name: app-a-region-a-cluster-01
             sources:
-            - repoURL: https://github.com/dhpup/kargo-b.git
+            - repoURL: https://github.com/emilyxinyi/kargo-b.git
               desiredCommitFromStep: commit
 ---
 apiVersion: kargo.akuity.io/v1alpha1
@@ -195,7 +195,7 @@ spec:
       steps:
       - uses: git-clone
         config:
-          repoURL: https://github.com/dhpup/kargo-b.git
+          repoURL: https://github.com/emilyxinyi/kargo-b.git
           checkout:
           - branch: main
             path: ./src
@@ -230,7 +230,7 @@ spec:
           apps:
           - name: app-a-region-a-cluster-02
             sources:
-            - repoURL: https://github.com/dhpup/kargo-b.git
+            - repoURL: https://github.com/emilyxinyi/kargo-b.git
               desiredCommitFromStep: commit
 ---
 apiVersion: kargo.akuity.io/v1alpha1
@@ -254,7 +254,7 @@ spec:
       steps:
       - uses: git-clone
         config:
-          repoURL: https://github.com/dhpup/kargo-b.git
+          repoURL: https://github.com/emilyxinyi/kargo-b.git
           checkout:
           - branch: main
             path: ./src
@@ -289,7 +289,7 @@ spec:
           apps:
           - name: app-a-region-a-cluster-03
             sources:
-            - repoURL: https://github.com/dhpup/kargo-b.git
+            - repoURL: https://github.com/emilyxinyi/kargo-b.git
               desiredCommitFromStep: commit
 ---
 apiVersion: kargo.akuity.io/v1alpha1
@@ -331,7 +331,7 @@ spec:
       steps:
       - uses: git-clone
         config:
-          repoURL: https://github.com/dhpup/kargo-b.git
+          repoURL: https://github.com/emilyxinyi/kargo-b.git
           checkout:
           - branch: main
             path: ./src
@@ -366,7 +366,7 @@ spec:
           apps:
           - name: app-a-region-b-cluster-01
             sources:
-            - repoURL: https://github.com/dhpup/kargo-b.git
+            - repoURL: https://github.com/emilyxinyi/kargo-b.git
               desiredCommitFromStep: commit
 ---
 apiVersion: kargo.akuity.io/v1alpha1
@@ -390,7 +390,7 @@ spec:
       steps:
       - uses: git-clone
         config:
-          repoURL: https://github.com/dhpup/kargo-b.git
+          repoURL: https://github.com/emilyxinyi/kargo-b.git
           checkout:
           - branch: main
             path: ./src
@@ -425,7 +425,7 @@ spec:
           apps:
           - name: app-a-region-b-cluster-02
             sources:
-            - repoURL: https://github.com/dhpup/kargo-b.git
+            - repoURL: https://github.com/emilyxinyi/kargo-b.git
               desiredCommitFromStep: commit
 ---
 apiVersion: kargo.akuity.io/v1alpha1
@@ -449,7 +449,7 @@ spec:
       steps:
       - uses: git-clone
         config:
-          repoURL: https://github.com/dhpup/kargo-b.git
+          repoURL: https://github.com/emilyxinyi/kargo-b.git
           checkout:
           - branch: main
             path: ./src
@@ -484,5 +484,5 @@ spec:
           apps:
           - name: app-a-region-b-cluster-03
             sources:
-            - repoURL: https://github.com/dhpup/kargo-b.git
+            - repoURL: https://github.com/emilyxinyi/kargo-b.git
               desiredCommitFromStep: commit

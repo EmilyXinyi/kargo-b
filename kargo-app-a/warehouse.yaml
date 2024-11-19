@@ -9,7 +9,7 @@ spec:
   shard: kargo-agent
   subscriptions:
   - git:
-      repoURL: https://github.com/dhpup/kargo-b.git
+      repoURL: https://github.com/emilyxinyi/kargo-b.git
       branch: main
   - image:
       repoURL: ghcr.io/dhpup/guestbook
