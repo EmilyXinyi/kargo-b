@@ -12,4 +12,4 @@ spec:
       repoURL: https://github.com/emilyxinyi/kargo-b.git
       branch: main
   - image:
-      repoURL: ghcr.io/emilyxinyi/guestbook:v1
+      repoURL: ghcr.io/emilyxinyi/guestbook

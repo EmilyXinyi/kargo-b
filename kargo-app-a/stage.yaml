@@ -33,7 +33,7 @@ spec:
         config:
           path: ./src/app-a/non-prod/dev
           images:
-          - image: ghcr.io/emilyxinyi/guestbook:v1
+          - image: ghcr.io/emilyxinyi/guestbook
       - uses: kustomize-build
         config:
           path: ./src/app-a/non-prod/dev
@@ -92,7 +92,7 @@ spec:
         config:
           path: ./src/app-a/base
           images:
-          - image: ghcr.io/emilyxinyi/guestbook:v1
+          - image: ghcr.io/emilyxinyi/guestbook
       - uses: kustomize-build
         config:
           path: ./src/app-a/non-prod/uat
@@ -151,7 +151,7 @@ spec:
         config:
           path: ./src/app-a/base
           images:
-          - image: ghcr.io/emilyxinyi/guestbook:v1
+          - image: ghcr.io/emilyxinyi/guestbook
       - uses: kustomize-build
         config:
           path: ./src/app-a/region-a/cluster-01
@@ -210,7 +210,7 @@ spec:
         config:
           path: ./src/app-a/base
           images:
-          - image: ghcr.io/emilyxinyi/guestbook:v1
+          - image: ghcr.io/emilyxinyi/guestbook
       - uses: kustomize-build
         config:
           path: ./src/app-a/region-a/cluster-02
@@ -269,7 +269,7 @@ spec:
         config:
           path: ./src/app-a/base
           images:
-          - image: ghcr.io/emilyxinyi/guestbook:v1
+          - image: ghcr.io/emilyxinyi/guestbook
       - uses: kustomize-build
         config:
           path: ./src/app-a/region-a/cluster-03
@@ -346,7 +346,7 @@ spec:
         config:
           path: ./src/app-a/base
           images:
-          - image: ghcr.io/emilyxinyi/guestbook:v1
+          - image: ghcr.io/emilyxinyi/guestbook
       - uses: kustomize-build
         config:
           path: ./src/app-a/region-b/cluster-01
@@ -405,7 +405,7 @@ spec:
         config:
           path: ./src/app-a/base
           images:
-          - image: ghcr.io/emilyxinyi/guestbook:v1
+          - image: ghcr.io/emilyxinyi/guestbook
       - uses: kustomize-build
         config:
           path: ./src/app-a/region-b/cluster-02
@@ -464,7 +464,7 @@ spec:
         config:
           path: ./src/app-a/base
           images:
-          - image: ghcr.io/emilyxinyi/guestbook:v1
+          - image: ghcr.io/emilyxinyi/guestbook
       - uses: kustomize-build
         config:
           path: ./src/app-a/region-b/cluster-03
