@@ -96,6 +96,7 @@ spec:
           path: ./src/app-a/base
           images:
           - image: ghcr.io/emilyxinyi/guestbook
+            tag: ${{quote(imageFrom('ghcr.io/emilyxinyi/guestbook').Tag)}}
       - uses: kustomize-build
         config:
           path: ./src/app-a/non-prod/uat
@@ -104,8 +105,7 @@ spec:
         as: commit
         config:
           path: ./out
-          messageFromSteps:
-          - update-image
+          message: ${{ outputs['update-image'].commitMessage }}
       - uses: git-push
         config:
           path: ./out
@@ -116,7 +116,7 @@ spec:
           - name: app-a-non-prod-uat
             sources:
             - repoURL: https://github.com/emilyxinyi/kargo-b.git
-              desiredCommitFromStep: commit
+              desiredRevision: ${{ outputs.commit.commit }}
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
