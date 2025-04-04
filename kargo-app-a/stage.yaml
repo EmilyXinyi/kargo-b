@@ -34,6 +34,7 @@ spec:
           path: ./src/app-a/non-prod/dev
           images:
           - image: ghcr.io/emilyxinyi/guestbook
+            tag: ${{ imageFrom(quote(ghcr.io/emilyxinyi/guestbook)).Tag }}
       - uses: kustomize-build
         config:
           path: ./src/app-a/non-prod/dev
@@ -42,7 +43,7 @@ spec:
         as: commit
         config:
           path: ./out
-          messageFromSteps:
+          Message:
           - update-image
       - uses: git-push
         config:
