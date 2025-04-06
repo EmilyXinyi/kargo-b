@@ -77,6 +77,9 @@ spec:
       - dev
   promotionTemplate:
     spec:
+      vars: 
+      - name: imageRepo 
+        value: ghcr.io/emilyxinyi/guestbook
       steps:
       - uses: git-clone
         config:
@@ -95,8 +98,9 @@ spec:
         config:
           path: ./src/app-a/base
           images:
-          - image: ghcr.io/emilyxinyi/guestbook
-            tag: ${{quote(imageFrom('ghcr.io/emilyxinyi/guestbook').Tag)}}
+          - image: ${{ vars.imageRepo }}
+            # tag: ${{quote(imageFrom('ghcr.io/emilyxinyi/guestbook').Tag)}}
+            tag: ${{ imageFrom(vars.imageRepo).Tag }}
       - uses: kustomize-build
         config:
           path: ./src/app-a/non-prod/uat
