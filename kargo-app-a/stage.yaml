@@ -288,7 +288,7 @@ spec:
       - uses: kustomize-set-image
         as: update-image
         config:
-          path: ./src/app-a/base
+          path: ./src/app-a/region-b/cluster-01
           images:
           - image: ${{ vars.imageRepo }}
             tag: ${{ imageFrom(vars.imageRepo).Tag }}
@@ -350,7 +350,7 @@ spec:
       - uses: kustomize-set-image
         as: update-image
         config:
-          path: ./src/app-a/base
+          path: ./src/app-a/region-b/cluster-02
           images:
           - image: ${{ vars.imageRepo }}
             tag: ${{ imageFrom(vars.imageRepo).Tag }}
