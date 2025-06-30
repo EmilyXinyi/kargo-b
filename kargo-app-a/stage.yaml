@@ -19,7 +19,8 @@ spec:
       - name: imageRepo 
         value: ghcr.io/emilyxinyi/guestbook
       steps:
-      - task: standard-process
+      - task: 
+          name: standard-process
       # - uses: git-clone
       #   config:
       #     repoURL: https://github.com/emilyxinyi/kargo-b.git
