@@ -20,46 +20,7 @@ spec:
         value: ghcr.io/emilyxinyi/guestbook
       steps:
       - task: 
-          name: standard-process
-      # - uses: git-clone
-      #   config:
-      #     repoURL: https://github.com/emilyxinyi/kargo-b.git
-      #     checkout:
-      #     - branch: main
-      #       path: ./src
-      #     - branch: app-a/non-prod/dev
-      #       create: true
-      #       path: ./out
-      # - uses: git-clear
-      #   config:
-      #     path: ./out
-      # - uses: kustomize-set-image
-      #   as: update-image
-      #   config:
-      #     path: ./src/app-a/non-prod/dev
-      #     images:
-      #     - image: ghcr.io/emilyxinyi/guestbook
-      #       tag: ${{ imageFrom(vars.imageRepo).Tag }}
-      # - uses: kustomize-build
-      #   config:
-      #     path: ./src/app-a/non-prod/dev
-      #     outPath: ./out/manifests.yaml
-      # - uses: git-commit
-      #   as: commit
-      #   config:
-      #     path: ./out
-      #     message: ${{ outputs['update-image'].commitMessage }}
-      # - uses: git-push
-      #   config:
-      #     path: ./out
-      #     targetBranch: app-a/non-prod/dev
-      # - uses: argocd-update
-      #   config:
-      #     apps:
-      #     - name: app-a-non-prod-dev
-      #       sources:
-      #       - repoURL: https://github.com/emilyxinyi/kargo-b.git
-      #         desiredRevision: ${{ outputs.commit.commit }}
+          name: standard-process-non-prod
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
@@ -83,46 +44,48 @@ spec:
       - name: imageRepo 
         value: ghcr.io/emilyxinyi/guestbook
       steps:
-      - uses: git-clone
-        config:
-          repoURL: https://github.com/emilyxinyi/kargo-b.git
-          checkout:
-          - branch: main
-            path: ./src
-          - branch: app-a/non-prod/uat
-            create: true
-            path: ./out
-      - uses: git-clear
-        config:
-          path: ./out
-      - uses: kustomize-set-image
-        as: update-image
-        config:
-          path: ./src/app-a/base
-          images:
-          - image: ${{ vars.imageRepo }}
-            # tag: ${{quote(imageFrom('ghcr.io/emilyxinyi/guestbook').Tag)}}
-            tag: ${{ imageFrom(vars.imageRepo).Tag }}
-      - uses: kustomize-build
-        config:
-          path: ./src/app-a/non-prod/uat
-          outPath: ./out/manifests.yaml
-      - uses: git-commit
-        as: commit
-        config:
-          path: ./out
-          message: ${{ outputs['update-image'].commitMessage }}
-      - uses: git-push
-        config:
-          path: ./out
-          targetBranch: app-a/non-prod/uat
-      - uses: argocd-update
-        config:
-          apps:
-          - name: app-a-non-prod-uat
-            sources:
-            - repoURL: https://github.com/emilyxinyi/kargo-b.git
-              desiredRevision: ${{ outputs.commit.commit }}
+      - task: 
+          name: standard-process-non-prod
+      # - uses: git-clone
+      #   config:
+      #     repoURL: https://github.com/emilyxinyi/kargo-b.git
+      #     checkout:
+      #     - branch: main
+      #       path: ./src
+      #     - branch: app-a/non-prod/uat
+      #       create: true
+      #       path: ./out
+      # - uses: git-clear
+      #   config:
+      #     path: ./out
+      # - uses: kustomize-set-image
+      #   as: update-image
+      #   config:
+      #     path: ./src/app-a/base
+      #     images:
+      #     - image: ${{ vars.imageRepo }}
+      #       # tag: ${{quote(imageFrom('ghcr.io/emilyxinyi/guestbook').Tag)}}
+      #       tag: ${{ imageFrom(vars.imageRepo).Tag }}
+      # - uses: kustomize-build
+      #   config:
+      #     path: ./src/app-a/non-prod/uat
+      #     outPath: ./out/manifests.yaml
+      # - uses: git-commit
+      #   as: commit
+      #   config:
+      #     path: ./out
+      #     message: ${{ outputs['update-image'].commitMessage }}
+      # - uses: git-push
+      #   config:
+      #     path: ./out
+      #     targetBranch: app-a/non-prod/uat
+      # - uses: argocd-update
+      #   config:
+      #     apps:
+      #     - name: app-a-non-prod-uat
+      #       sources:
+      #       - repoURL: https://github.com/emilyxinyi/kargo-b.git
+      #         desiredRevision: ${{ outputs.commit.commit }}
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
