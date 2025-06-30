@@ -46,4 +46,3 @@ spec:
       - name: app-a-non-prod-${{ ctx.stage }}
         sources:
         - repoURL: https://github.com/emilyxinyi/kargo-b.git
-          desiredRevision: ${{ outputs.commit.commit }}
