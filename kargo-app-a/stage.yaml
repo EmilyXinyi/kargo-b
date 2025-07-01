@@ -21,29 +21,29 @@ spec:
       steps:
       - task: 
           name: standard-process-non-prod
-      # - uses: jira
-      #   as: create-deployment-issue
-      #   config:
-      #     credentials:
-      #       secretName: jira-credentials
-      #     createIssue:
-      #       projectKey: SCRUM
-      #       summary: "Deploy ${{ imageFrom(vars.imageRepo).Tag }} to ${{ ctx.stage.name }}"
-      #       description: "Deploying ${{ imageFrom(vars.imageRepo).RepoURL }}:${{ imageFrom(vars.imageRepo).Tag }} to ${{ ctx.stage.name }} environment. Promotion ID: ${{ ctx.promotion.name }}. Freight: ${{ ctx.targetFreight.name }}."
-      #       issueType: Task
-      #       assigneeEmail: devops@company.com
-      #       labels:
-      #         - deployment
-      #         - "${{ ctx.stage.name }}"
-      #         - "release-${{ imageFrom(vars.imageRepo).Tag }}"
-      # # Use the created issue key in subsequent steps
-      # - uses: jira
-      #   config:
-      #     credentials:
-      #       secretName: jira-credentials
-      #     updateIssue:
-      #       issueKey: "${{ outputs['create-deployment-issue'].key }}"
-      #       status: "IN PROGRESS"
+      - uses: jira
+        as: create-deployment-issue
+        config:
+          credentials:
+            secretName: jira-credentials
+          createIssue:
+            projectKey: SCRUM
+            summary: "Deploy ${{ imageFrom(vars.imageRepo).Tag }} to ${{ ctx.stage.name }}"
+            description: "Deploying ${{ imageFrom(vars.imageRepo).RepoURL }}:${{ imageFrom(vars.imageRepo).Tag }} to ${{ ctx.stage.name }} environment. Promotion ID: ${{ ctx.promotion.name }}. Freight: ${{ ctx.targetFreight.name }}."
+            issueType: Task
+            assigneeEmail: devops@company.com
+            labels:
+              - deployment
+              - "${{ ctx.stage.name }}"
+              - "release-${{ imageFrom(vars.imageRepo).Tag }}"
+      # Use the created issue key in subsequent steps
+      - uses: jira
+        config:
+          credentials:
+            secretName: jira-credentials
+          updateIssue:
+            issueKey: "${{ outputs['create-deployment-issue'].key }}"
+            status: "IN PROGRESS"
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
