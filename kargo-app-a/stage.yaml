@@ -76,7 +76,7 @@ spec:
             secretName: jira-credentials
           waitForStatus:
             issueKey: "${{ freightMetadata(ctx.targetFreight.name, 'change-request-key') }}"
-            expectedStatus: "Approved"
+            expectedStatus: "STAGED"
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
