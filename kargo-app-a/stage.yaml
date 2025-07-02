@@ -36,14 +36,14 @@ spec:
               - deployment
               - "${{ ctx.stage }}"
               - "release-${{ imageFrom(vars.imageRepo).Tag }}"
-      # Use the created issue key in subsequent steps
-      - uses: jira
-        config:
-          credentials:
-            secretName: jira-credentials
-          updateIssue:
-            issueKey: "${{ outputs['create-deployment-issue'].key }}"
-            status: "IN PROGRESS"
+      # # Use the created issue key in subsequent steps
+      # - uses: jira
+      #   config:
+      #     credentials:
+      #       secretName: jira-credentials
+      #     updateIssue:
+      #       issueKey: "${{ outputs['create-deployment-issue'].key }}"
+      #       status: "IN PROGRESS"
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
