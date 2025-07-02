@@ -31,7 +31,7 @@ spec:
             summary: "Deploy ${{ imageFrom(vars.imageRepo).Tag }} to ${{ ctx.stage }}"
             description: "Deploying ${{ imageFrom(vars.imageRepo).RepoURL }}:${{ imageFrom(vars.imageRepo).Tag }} to ${{ ctx.stage }} environment. Promotion ID: ${{ ctx.promotion }}. Freight: ${{ ctx.targetFreight.name }}."
             issueType: Task
-            assigneeEmail: devops@company.com
+            # assigneeEmail: devops@company.com
             labels:
               - deployment
               - "${{ ctx.stage }}"
