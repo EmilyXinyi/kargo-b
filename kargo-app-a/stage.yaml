@@ -28,13 +28,13 @@ spec:
             secretName: jira-credentials
           createIssue:
             projectKey: SCRUM
-            summary: "Deploy ${{ imageFrom(vars.imageRepo).Tag }} to ${{ ctx.stage.name }}"
-            description: "Deploying ${{ imageFrom(vars.imageRepo).RepoURL }}:${{ imageFrom(vars.imageRepo).Tag }} to ${{ ctx.stage.name }} environment. Promotion ID: ${{ ctx.promotion.name }}. Freight: ${{ ctx.targetFreight.name }}."
+            summary: "Deploy ${{ imageFrom(vars.imageRepo).Tag }} to ${{ ctx.stage }}"
+            description: "Deploying ${{ imageFrom(vars.imageRepo).RepoURL }}:${{ imageFrom(vars.imageRepo).Tag }} to ${{ ctx.stage }} environment. Promotion ID: ${{ ctx.promotion.name }}. Freight: ${{ ctx.targetFreight.name }}."
             issueType: Task
             assigneeEmail: devops@company.com
             labels:
               - deployment
-              - "${{ ctx.stage.name }}"
+              - "${{ ctx.stage }}"
               - "release-${{ imageFrom(vars.imageRepo).Tag }}"
       # Use the created issue key in subsequent steps
       - uses: jira
