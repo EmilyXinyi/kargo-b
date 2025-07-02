@@ -69,6 +69,14 @@ spec:
       steps:
       - task: 
           name: standard-process-non-prod
+      - uses: jira
+        as: wait-for-status
+        config:
+          credentials:
+            secretName: jira-credentials
+          waitForStatus:
+            issueKey: "${{ freightMetadata(ctx.targetFreight.name, 'change-request-key') }}"
+            expectedStatus: "Approved"
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
