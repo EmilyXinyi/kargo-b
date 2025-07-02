@@ -75,7 +75,7 @@ spec:
           credentials:
             secretName: jira-credentials
           waitForStatus:
-            issueKey: "${{ freightMetadata(ctx.targetFreight.name, 'change-request-key') }}"
+            issueKey: "${{ freightMetadata(ctx.targetFreight.name, 'jira-issue-key') }}"
             expectedStatus: "STAGED"
 ---
 apiVersion: kargo.akuity.io/v1alpha1
@@ -132,6 +132,25 @@ spec:
         config:
           path: ./out
           targetBranch: app-a/region-a/cluster-01
+      - uses: jira
+        as: search-issue
+        config:
+          credentials:
+            secretName: jira
+          searchIssue:
+            jql: "created <= 1d and labels IN (release-${{ imageFrom(vars.imageRepo).Tag }}) ORDER BY created DESC"
+            expectMultiple: true
+            fields:
+              - key
+            # Wait for final production approval
+      - uses: jira
+        as: wait-for-approval
+        config:
+          credentials:
+            secretName: jira
+          waitForStatus:
+            issueKey: ${{ outputs['search-issue'].key }}
+            expectedStatus: RELEASED
       - uses: argocd-update
         config:
           apps:
