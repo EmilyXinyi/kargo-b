@@ -37,13 +37,13 @@ spec:
               - "${{ ctx.stage }}"
               - "release-${{ imageFrom(vars.imageRepo).Tag }}"
       # Use the created issue key in subsequent steps
-      - uses: kustomize-set-image
-        as: failure-simulation
-        config:
-          path: invalid
-          images:
-          - image: ${{ vars.imageRepo }}
-            tag: invalid
+      # - uses: kustomize-set-image
+      #   as: failure-simulation
+      #   config:
+      #     path: invalid
+      #     images:
+      #     - image: ${{ vars.imageRepo }}
+      #       tag: invalid
       - uses: jira
         as: on-failure-cleanup-issue
         if: ${{ failure() }}
@@ -76,6 +76,14 @@ spec:
       - name: imageRepo 
         value: ghcr.io/emilyxinyi/guestbook
       steps:
+      - uses: jira
+        as: add-progress-comment
+        config:
+          credentials:
+            secretName: jira-credentials
+          commentOnIssue:
+            issueKey: "${{ freightMetadata(ctx.targetFreight.name, 'jira-issue-key') }}"
+            body: "Promotion started. Environment: ${{ ctx.stage }}. Image: ${{ imageFrom(vars.imageRepo).RepoURL }}:${{ imageFrom(vars.imageRepo).Tag }}. Promotion: ${{ ctx.promotion }}. Status: Deploying to ${{ ctx.stage }} environment..."
       - task: 
           name: standard-process-non-prod
       - uses: jira
@@ -86,6 +94,14 @@ spec:
           waitForStatus:
             issueKey: "${{ freightMetadata(ctx.targetFreight.name, 'jira-issue-key') }}"
             expectedStatus: "STAGED"
+      - uses: jira
+        as: delete-progress-comment
+        config:
+          credentials:
+            secretName: jira-credentials
+          deleteComment:
+            issueKey: "${{ freightMetadata(ctx.targetFreight.name, 'jira-issue-key') }}"
+            commentID: "${{ outputs['add-progress-comment'].commentID }}"
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
