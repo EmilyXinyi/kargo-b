@@ -1,11 +1,13 @@
 apiVersion: kargo.akuity.io/v1alpha1
 kind: PromotionTask
 metadata:
-  name: standard-process-non-prod
+  name: standard-process-prod
   namespace: app-a
 spec:
   vars:
   - name: imageRepo
+  - name: region
+  - name: cluster
   steps:
   - uses: git-clone
     config:
@@ -13,7 +15,7 @@ spec:
       checkout:
       - branch: main
         path: ./src
-      - branch: app-a/non-prod/${{ ctx.stage }}
+      - branch: app-a/${{ vars.region }}/${{ vars.cluster }}
         create: true
         path: ./out
   - uses: git-clear
@@ -22,28 +24,27 @@ spec:
   - uses: kustomize-set-image
     as: update-image
     config:
-      path: ./src/app-a/non-prod/${{ ctx.stage }}
+      path: ./src/app-a/base
       images:
       - image: ${{ vars.imageRepo }}
         tag: ${{ imageFrom(vars.imageRepo).Tag }}
   - uses: kustomize-build
     config:
-      path: ./src/app-a/non-prod/${{ ctx.stage }}
+      path: ./src/app-a/${{ vars.region }}/${{ vars.cluster }}
       outPath: ./out/manifests.yaml
   - uses: git-commit
     as: commit
     config:
       path: ./out
-      message: | 
-        ${{ ctx.stage }}: ${{ task.outputs['update-image'].commitMessage}}
+      message: ${{ outputs['update-image'].commitMessage }}
   - uses: git-push
     config:
       path: ./out
-      targetBranch: app-a/non-prod/${{ ctx.stage }}
-  - uses: argocd-update
-    config:
-      apps:
-      - name: app-a-non-prod-${{ ctx.stage }}
-        sources:
-        - repoURL: https://github.com/emilyxinyi/kargo-b.git
-          desiredRevision: ${{ task.outputs.commit.commit }}
+      targetBranch: app-a/${{ vars.region }}/${{ vars.cluster }}
+  # - uses: argocd-update
+  #   config:
+  #     apps:
+  #     - name: app-a-${{ vars.region }}-${{ vars.cluster }}
+  #       sources:
+  #       - repoURL: https://github.com/emilyxinyi/kargo-b.git
+  #         desiredRevision: ${{ task.outputs.commit.commit }}

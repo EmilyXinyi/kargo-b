@@ -124,39 +124,45 @@ spec:
       vars: 
       - name: imageRepo 
         value: ghcr.io/emilyxinyi/guestbook
+      - name: region
+        value: region-a
+      - name: cluster
+        value: cluster-01
       steps:
-      - uses: git-clone
-        config:
-          repoURL: https://github.com/emilyxinyi/kargo-b.git
-          checkout:
-          - branch: main
-            path: ./src
-          - branch: app-a/region-a/cluster-01
-            create: true
-            path: ./out
-      - uses: git-clear
-        config:
-          path: ./out
-      - uses: kustomize-set-image
-        as: update-image
-        config:
-          path: ./src/app-a/base
-          images:
-          - image: ${{ vars.imageRepo }}
-            tag: ${{ imageFrom(vars.imageRepo).Tag }}
-      - uses: kustomize-build
-        config:
-          path: ./src/app-a/region-a/cluster-01
-          outPath: ./out/manifests.yaml
-      - uses: git-commit
-        as: commit
-        config:
-          path: ./out
-          message: ${{ outputs['update-image'].commitMessage }}
-      - uses: git-push
-        config:
-          path: ./out
-          targetBranch: app-a/region-a/cluster-01
+      - task: 
+          name: standard-process-prod
+      # - uses: git-clone
+      #   config:
+      #     repoURL: https://github.com/emilyxinyi/kargo-b.git
+      #     checkout:
+      #     - branch: main
+      #       path: ./src
+      #     - branch: app-a/region-a/cluster-01
+      #       create: true
+      #       path: ./out
+      # - uses: git-clear
+      #   config:
+      #     path: ./out
+      # - uses: kustomize-set-image
+      #   as: update-image
+      #   config:
+      #     path: ./src/app-a/base
+      #     images:
+      #     - image: ${{ vars.imageRepo }}
+      #       tag: ${{ imageFrom(vars.imageRepo).Tag }}
+      # - uses: kustomize-build
+      #   config:
+      #     path: ./src/app-a/region-a/cluster-01
+      #     outPath: ./out/manifests.yaml
+      # - uses: git-commit
+      #   as: commit
+      #   config:
+      #     path: ./out
+      #     message: ${{ outputs['update-image'].commitMessage }}
+      # - uses: git-push
+      #   config:
+      #     path: ./out
+      #     targetBranch: app-a/region-a/cluster-01
       - uses: jira
         as: search-issue
         config:
