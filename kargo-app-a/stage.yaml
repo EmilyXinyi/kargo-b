@@ -46,7 +46,8 @@ spec:
             tag: invalid
       - uses: jira
         as: on-failure-cleanup-issue
-        if: ${{ failure() }}
+        # if: ${{ failure() }}
+        if: ${{ always() }}
         config:
           credentials:
             secretName: jira-credentials
