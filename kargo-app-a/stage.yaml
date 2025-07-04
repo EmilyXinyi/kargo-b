@@ -37,13 +37,13 @@ spec:
               - "${{ ctx.stage }}"
               - "release-${{ imageFrom(vars.imageRepo).Tag }}"
       # Use the created issue key in subsequent steps
-      # - uses: kustomize-set-image
-      #   as: failure-simulation
-      #   config:
-      #     path: invalid
-      #     images:
-      #     - image: ${{ vars.imageRepo }}
-      #       tag: invalid
+      - uses: kustomize-set-image
+        as: failure-simulation
+        config:
+          path: invalid
+          images:
+          - image: ${{ vars.imageRepo }}
+            tag: invalid
       - uses: jira
         as: on-failure-cleanup-issue
         if: ${{ failure() }}
