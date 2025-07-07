@@ -132,6 +132,7 @@ spec:
       steps:
       - task: 
           name: standard-process-prod
+        as: standard-process-prod
       - uses: jira
         as: search-issue
         config:
@@ -151,13 +152,17 @@ spec:
           waitForStatus:
             issueKey: ${{ outputs['search-issue'].key }}
             expectedStatus: RELEASED
+      - uses: compose-output
+        as: output
+        config:
+          commit: ${{ task.outputs['commit'].commit }}
       - uses: argocd-update
         config:
           apps:
           - name: app-a-region-a-cluster-01
             sources:
             - repoURL: https://github.com/emilyxinyi/kargo-b.git
-              desiredRevision: ${{ task.outputs['commit'].commit }}
+              desiredRevision: ${{ outputs.standard-process-prod.commit }}
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
