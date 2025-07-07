@@ -36,24 +36,24 @@ spec:
               - deployment
               - "${{ ctx.stage }}"
               - "release-${{ imageFrom(vars.imageRepo).Tag }}"
-      # Use the created issue key in subsequent steps
-      - uses: kustomize-set-image
-        as: failure-simulation
-        config:
-          path: invalid
-          images:
-          - image: ${{ vars.imageRepo }}
-            tag: invalid
-      - uses: jira
-        as: on-failure-cleanup-issue
-        # if: ${{ failure() }}
-        if: ${{ always() }}
-        config:
-          credentials:
-            secretName: jira-credentials
-          deleteIssue:
-            issueKey: "${{ freightMetadata(ctx.targetFreight.name, 'jira-issue-key') }}"
-            deleteSubtasks: true
+      # # Use the created issue key in subsequent steps
+      # - uses: kustomize-set-image
+      #   as: failure-simulation
+      #   config:
+      #     path: invalid
+      #     images:
+      #     - image: ${{ vars.imageRepo }}
+      #       tag: invalid
+      # - uses: jira
+      #   as: on-failure-cleanup-issue
+      #   # if: ${{ failure() }}
+      #   if: ${{ always() }}
+      #   config:
+      #     credentials:
+      #       secretName: jira-credentials
+      #     deleteIssue:
+      #       issueKey: "${{ freightMetadata(ctx.targetFreight.name, 'jira-issue-key') }}"
+      #       deleteSubtasks: true
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
@@ -132,38 +132,6 @@ spec:
       steps:
       - task: 
           name: standard-process-prod
-      # - uses: git-clone
-      #   config:
-      #     repoURL: https://github.com/emilyxinyi/kargo-b.git
-      #     checkout:
-      #     - branch: main
-      #       path: ./src
-      #     - branch: app-a/region-a/cluster-01
-      #       create: true
-      #       path: ./out
-      # - uses: git-clear
-      #   config:
-      #     path: ./out
-      # - uses: kustomize-set-image
-      #   as: update-image
-      #   config:
-      #     path: ./src/app-a/base
-      #     images:
-      #     - image: ${{ vars.imageRepo }}
-      #       tag: ${{ imageFrom(vars.imageRepo).Tag }}
-      # - uses: kustomize-build
-      #   config:
-      #     path: ./src/app-a/region-a/cluster-01
-      #     outPath: ./out/manifests.yaml
-      # - uses: git-commit
-      #   as: commit
-      #   config:
-      #     path: ./out
-      #     message: ${{ outputs['update-image'].commitMessage }}
-      # - uses: git-push
-      #   config:
-      #     path: ./out
-      #     targetBranch: app-a/region-a/cluster-01
       - uses: jira
         as: search-issue
         config:
@@ -189,7 +157,7 @@ spec:
           - name: app-a-region-a-cluster-01
             sources:
             - repoURL: https://github.com/emilyxinyi/kargo-b.git
-              desiredRevision: ${{ outputs.commit.commit }}
+              desiredRevision: ${{ task.outputs['commit'].commit }}
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
