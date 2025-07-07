@@ -36,24 +36,25 @@ spec:
               - deployment
               - "${{ ctx.stage }}"
               - "release-${{ imageFrom(vars.imageRepo).Tag }}"
-      # # Use the created issue key in subsequent steps
-      # - uses: kustomize-set-image
-      #   as: failure-simulation
-      #   config:
-      #     path: invalid
-      #     images:
-      #     - image: ${{ vars.imageRepo }}
-      #       tag: invalid
-      # - uses: jira
-      #   as: on-failure-cleanup-issue
-      #   # if: ${{ failure() }}
-      #   if: ${{ always() }}
-      #   config:
-      #     credentials:
-      #       secretName: jira-credentials
-      #     deleteIssue:
-      #       issueKey: "${{ freightMetadata(ctx.targetFreight.name, 'jira-issue-key') }}"
-      #       deleteSubtasks: true
+      # Use the created issue key in subsequent steps
+      - uses: kustomize-set-image
+        as: failure-simulation
+        config:
+          path: invalid
+          images:
+          - image: ${{ vars.imageRepo }}
+            tag: invalid
+      - uses: jira
+        as: on-failure-cleanup-issue
+        if: ${{ failure() }}
+        # if: ${{ always() }}
+        config:
+          credentials:
+            secretName: jira-credentials
+          deleteIssue:
+            # issueKey: "${{ freightMetadata(ctx.targetFreight.name, 'jira-issue-key') }}"
+            issueKey: ${{ outputs['create-deployment-ticket'].key }}
+            deleteSubtasks: true
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
@@ -132,7 +133,7 @@ spec:
       steps:
       - task: 
           name: standard-process-prod
-        as: standard-process-prod
+        as: promotion
       - uses: jira
         as: search-issue
         config:
@@ -158,7 +159,7 @@ spec:
           - name: app-a-region-a-cluster-01
             sources:
             - repoURL: https://github.com/emilyxinyi/kargo-b.git
-              desiredRevision: ${{ outputs.standard-process-prod.commit }}
+              desiredRevision: ${{ outputs.promotion.commit }}
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
