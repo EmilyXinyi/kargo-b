@@ -37,25 +37,25 @@ spec:
               - "${{ ctx.stage }}"
               - "release-${{ imageFrom(vars.imageRepo).Tag }}"
       # Use the created issue key in subsequent steps
-      # - uses: kustomize-set-image
-      #   as: failure-simulation
-      #   config:
-      #     path: invalid
-      #     images:
-      #     - image: ${{ vars.imageRepo }}
-      #       tag: invalid
-      - uses: argocd-update
+      - uses: kustomize-set-image
         as: failure-simulation
         config:
-          apps:
-            - name: test-app
-              namespace: argocd
-              sources:
-              - repoURL: https://github.com/gdsoumya/jira-demo.git
-                kustomize:
-                  images:
-                  - repoURL: public.ecr.aws/nginx/nginx
-                    tag: ${{ imageFrom("public.ecr.aws/nginx/nginx").Tag }}
+          path: invalid
+          images:
+          - image: ${{ vars.imageRepo }}
+            tag: invalid
+      # - uses: argocd-update
+      #   as: failure-simulation
+      #   config:
+      #     apps:
+      #       - name: test-app
+      #         namespace: argocd
+      #         sources:
+      #         - repoURL: https://github.com/gdsoumya/jira-demo.git
+      #           kustomize:
+      #             images:
+      #             - repoURL: public.ecr.aws/nginx/nginx
+      #               tag: ${{ imageFrom("public.ecr.aws/nginx/nginx").Tag }}
       - uses: jira
         as: on-failure-cleanup-issue
         if: ${{ failure() }}
