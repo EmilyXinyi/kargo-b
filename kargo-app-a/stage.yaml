@@ -208,7 +208,7 @@ spec:
           - name: app-a-region-a-cluster-02
             sources:
             - repoURL: https://github.com/emilyxinyi/kargo-b.git
-              desiredRevision: ${{ outputs.commit.commit }}
+              desiredRevision: ${{ outputs.promotion.commit }}
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
