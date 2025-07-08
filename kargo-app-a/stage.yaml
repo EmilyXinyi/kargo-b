@@ -202,38 +202,6 @@ spec:
       - task: 
           name: standard-process-prod
         as: promotion
-      # - uses: git-clone
-      #   config:
-      #     repoURL: https://github.com/emilyxinyi/kargo-b.git
-      #     checkout:
-      #     - branch: main
-      #       path: ./src
-      #     - branch: app-a/region-a/cluster-02
-      #       create: true
-      #       path: ./out
-      # - uses: git-clear
-      #   config:
-      #     path: ./out
-      # - uses: kustomize-set-image
-      #   as: update-image
-      #   config:
-      #     path: ./src/app-a/base
-      #     images:
-      #     - image: ${{ vars.imageRepo }}
-      #       tag: ${{ imageFrom(vars.imageRepo).Tag }}
-      # - uses: kustomize-build
-      #   config:
-      #     path: ./src/app-a/region-a/cluster-02
-      #     outPath: ./out/manifests.yaml
-      # - uses: git-commit
-      #   as: commit
-      #   config:
-      #     path: ./out
-      #     message: ${{ outputs['update-image'].commitMessage }}
-      # - uses: git-push
-      #   config:
-      #     path: ./out
-      #     targetBranch: app-a/region-a/cluster-02
       - uses: argocd-update
         config:
           apps:
@@ -271,45 +239,13 @@ spec:
       - task: 
           name: standard-process-prod
         as: promotion
-      # - uses: git-clone
-      #   config:
-      #     repoURL: https://github.com/emilyxinyi/kargo-b.git
-      #     checkout:
-      #     - branch: main
-      #       path: ./src
-      #     - branch: app-a/region-a/cluster-03
-      #       create: true
-      #       path: ./out
-      # - uses: git-clear
-      #   config:
-      #     path: ./out
-      # - uses: kustomize-set-image
-      #   as: update-image
-      #   config:
-      #     path: ./src/app-a/base
-      #     images:
-      #     - image: ${{ vars.imageRepo }}
-      #       tag: ${{ imageFrom(vars.imageRepo).Tag }}
-      # - uses: kustomize-build
-      #   config:
-      #     path: ./src/app-a/region-a/cluster-03
-      #     outPath: ./out/manifests.yaml
-      # - uses: git-commit
-      #   as: commit
-      #   config:
-      #     path: ./out
-      #     message: ${{ outputs['update-image'].commitMessage }}
-      # - uses: git-push
-      #   config:
-      #     path: ./out
-      #     targetBranch: app-a/region-a/cluster-03
       - uses: argocd-update
         config:
           apps:
           - name: app-a-region-a-cluster-03
             sources:
             - repoURL: https://github.com/emilyxinyi/kargo-b.git
-              desiredRevision: ${{ outputs.commit.commit }}
+              desiredRevision: ${{ outputs.promotion.commit }}
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
@@ -358,45 +294,13 @@ spec:
       - task: 
           name: standard-process-prod
         as: promotion
-      # - uses: git-clone
-      #   config:
-      #     repoURL: https://github.com/emilyxinyi/kargo-b.git
-      #     checkout:
-      #     - branch: main
-      #       path: ./src
-      #     - branch: app-a/region-b/cluster-01
-      #       create: true
-      #       path: ./out
-      # - uses: git-clear
-      #   config:
-      #     path: ./out
-      # - uses: kustomize-set-image
-      #   as: update-image
-      #   config:
-      #     path: ./src/app-a/region-b/cluster-01
-      #     images:
-      #     - image: ${{ vars.imageRepo }}
-      #       tag: ${{ imageFrom(vars.imageRepo).Tag }}
-      # - uses: kustomize-build
-      #   config:
-      #     path: ./src/app-a/region-b/cluster-01
-      #     outPath: ./out/manifests.yaml
-      # - uses: git-commit
-      #   as: commit
-      #   config:
-      #     path: ./out
-      #     message: ${{ outputs['update-image'].commitMessage }}
-      # - uses: git-push
-      #   config:
-      #     path: ./out
-      #     targetBranch: app-a/region-b/cluster-01
       - uses: argocd-update
         config:
           apps:
           - name: app-a-region-b-cluster-01
             sources:
             - repoURL: https://github.com/emilyxinyi/kargo-b.git
-              desiredRevision: ${{ outputs.commit.commit }}
+              desiredRevision: ${{ outputs.promotion.commit }}
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
@@ -427,45 +331,13 @@ spec:
       - task: 
           name: standard-process-prod
         as: promotion
-      # - uses: git-clone
-      #   config:
-      #     repoURL: https://github.com/emilyxinyi/kargo-b.git
-      #     checkout:
-      #     - branch: main
-      #       path: ./src
-      #     - branch: app-a/region-b/cluster-02
-      #       create: true
-      #       path: ./out
-      # - uses: git-clear
-      #   config:
-      #     path: ./out
-      # - uses: kustomize-set-image
-      #   as: update-image
-      #   config:
-      #     path: ./src/app-a/region-b/cluster-02
-      #     images:
-      #     - image: ${{ vars.imageRepo }}
-      #       tag: ${{ imageFrom(vars.imageRepo).Tag }}
-      # - uses: kustomize-build
-      #   config:
-      #     path: ./src/app-a/region-b/cluster-02
-      #     outPath: ./out/manifests.yaml
-      # - uses: git-commit
-      #   as: commit
-      #   config:
-      #     path: ./out
-      #     message: ${{ outputs['update-image'].commitMessage }}
-      # - uses: git-push
-      #   config:
-      #     path: ./out
-      #     targetBranch: app-a/region-b/cluster-02
       - uses: argocd-update
         config:
           apps:
           - name: app-a-region-b-cluster-02
             sources:
             - repoURL: https://github.com/emilyxinyi/kargo-b.git
-              desiredRevision: ${{ outputs.commit.commit }}
+              desiredRevision: ${{ outputs.promotion.commit }}
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
@@ -496,42 +368,10 @@ spec:
       - task: 
           name: standard-process-prod
         as: promotion
-      # - uses: git-clone
-      #   config:
-      #     repoURL: https://github.com/emilyxinyi/kargo-b.git
-      #     checkout:
-      #     - branch: main
-      #       path: ./src
-      #     - branch: app-a/region-b/cluster-03
-      #       create: true
-      #       path: ./out
-      # - uses: git-clear
-      #   config:
-      #     path: ./out
-      # - uses: kustomize-set-image
-      #   as: update-image
-      #   config:
-      #     path: ./src/app-a/region-b/cluster-03
-      #     images:
-      #     - image: ${{ vars.imageRepo }}
-      #       tag: ${{ imageFrom(vars.imageRepo).Tag }}
-      # - uses: kustomize-build
-      #   config:
-      #     path: ./src/app-a/region-b/cluster-03
-      #     outPath: ./out/manifests.yaml
-      # - uses: git-commit
-      #   as: commit
-      #   config:
-      #     path: ./out
-      #     message: ${{ outputs['update-image'].commitMessage }}
-      # - uses: git-push
-      #   config:
-      #     path: ./out
-      #     targetBranch: app-a/region-b/cluster-03
       - uses: argocd-update
         config:
           apps:
           - name: app-a-region-b-cluster-03
             sources:
             - repoURL: https://github.com/emilyxinyi/kargo-b.git
-              desiredRevision: ${{ outputs.commit.commit }}
+              desiredRevision: ${{ outputs.promotion.commit }}
